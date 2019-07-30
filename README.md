@@ -8,17 +8,31 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:6333
-npm run dev
+# serve with hot reload at localhost:6333，开启前台的页面
+npm run dev 
 
-# build for production with minification
-npm run build
+# 进入到文件目录/src/service下, localhost:3000 开启后台
+node index.js
 
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
 ## 做项目踩坑记
+
+想要完成这个项目的一些要求：
+
+
+    前提
+      技能掌握
+        前端 
+          1.javascript
+          2.vue框架 + vue-router
+          3.vux 移动端组件框架(PS:也可以选择你喜欢的框架)
+
+        后端：
+          1.node.js (koa框架)
+          2.mongodb 数据库
+          3.mongoose MongoDB的一个对象模型工具，是基于node-mongoldb-native开发的MongoDB nodes驱动，可以在异步的环境下执行。 
+          
 
 ******
 
@@ -28,6 +42,14 @@ npm run build --report
 
 
 ******
+
+目录结构梳理一下：
+
+![文件目录结构](
+https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/structure.png)
+
+写的不太全，具体看对应文件好啦。
+
 
 接下来是踩坑过程
 
