@@ -1,6 +1,6 @@
 # vue-my-app
 
-> A Vue.js project
+> A Vue.js mobile project
 
 ## Build Setup
 
@@ -34,6 +34,7 @@ node index.js
           3.mongoose MongoDB的一个对象模型工具，是基于node-mongoldb-native开发的MongoDB nodes驱动，可以在异步的环境下执行。 
           
 
+>  做该项目的缘由： 跟小勇娃随便瞎聊，后来说到都是做技术的，为什么不做个app自己用起来？刚好手机有个应用 **纪念日** 功能也比较简单，自己也一直想学学node,结合自己的前端技术很久了，索性闲余时间捯饬起来:relaxed:
 
 先来看下最终的效果吧。跟todolist蛮像的，基本的增删改查都有。
 
@@ -47,7 +48,9 @@ node index.js
 ![文件目录结构](
 https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/structure.png)
 
-写的不太全，具体看对应文件好啦。
+*写的不太全，具体看对应文件好啦,这个项目还是练手项目，所以初期比较简单，后期会再支持`图片上传`、`换肤`、`模糊搜索获取记录`等功能~*
+
+目前表就只有2个，一个users表，一个records表,对应表中字段的设计见 **src/service/schema** 下的设计
 
 
 ## 接下来是踩坑过程:cry:
