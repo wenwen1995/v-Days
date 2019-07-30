@@ -34,7 +34,6 @@ node index.js
           3.mongoose MongoDB的一个对象模型工具，是基于node-mongoldb-native开发的MongoDB nodes驱动，可以在异步的环境下执行。 
           
 
-******
 
 先来看下最终的效果吧。跟todolist蛮像的，基本的增删改查都有。
 
