@@ -50,7 +50,7 @@ https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/structure.png)
 写的不太全，具体看对应文件好啦。
 
 
-接下来是踩坑过程
+## 接下来是踩坑过程:cry:
 
 #### 1、使用mongodb koa 执行post 请求时，请求的数据时对的，数据库也插入了对应的记录，但是返回的状态码一直是404 ？
 
