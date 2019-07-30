@@ -698,8 +698,7 @@ er_1 dup key: { : "13588888888" }**
 
 解决步骤：
 
-![显示7](
-https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/p7.png)
+![显示7](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/p7.png)
 
 **出错原因是本来表中应该只有一个_id作为主键，但是不知道为啥，user表中_id和phoneNumber同时为主键，主键的值是不能重复的导致报错。所以只留下_id作为主键就好**
 
