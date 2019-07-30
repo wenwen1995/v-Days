@@ -10,7 +10,7 @@
 npm install
 
 # serve with hot reload at localhost:6333，开启前台的页面
-npm run dev 
+npm start
 
 # 进入到文件目录/src/service下, localhost:3000 开启后台
 node index.js
