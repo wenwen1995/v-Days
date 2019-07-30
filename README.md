@@ -40,6 +40,8 @@ node index.js
 
 ![gif图](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/1.gif)
 
+注：这里gif图好像显示的不完整，要想看全部效果，要么照开始一样，跑起来命令进行查看，要么戳这个链接 [https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/1.gif](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/1.gif) 进行下载 gif 查看
+
 
 ******
 
