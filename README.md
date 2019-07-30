@@ -1,4 +1,5 @@
-# vue-my-app
+# v-Days
+  (my-first-vue-app)
 
 > A Vue.js mobile project
 
