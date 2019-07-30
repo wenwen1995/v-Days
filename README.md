@@ -19,3 +19,5 @@ npm run build --report
 ```
 
 看下最终的效果吧。跟todolist蛮像的，基本的增删改查都有。
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-7-30/1.gif)
