@@ -618,7 +618,7 @@ export default instance;
 
   所以最终改了axios的封装，就好啦:smirk:
 
-该邂逅的代码乳腺癌：
+最终的这部分代码如下：
 
 ```js
 import axios from 'axios';
