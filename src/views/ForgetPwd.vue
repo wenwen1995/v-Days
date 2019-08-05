@@ -13,7 +13,7 @@
 		  </group>
 		</box>
 	  <box gap="100px 10px">
-        <x-button :gradients="['#1D62F0', '#19D5FD']"
+        <x-button :gradients="['#7aaee5', '#5e83cd']"
 				  @click.native="onResetPwd"
         >确定</x-button>
     </box>

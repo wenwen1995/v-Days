@@ -1,11 +1,11 @@
 <template>
   <div id="app" >
     <div v-if="!isHideHeader" class="headerStyle">
-      <x-header :left-options="{showBack: showBack}" >{{headerTitle}}</x-header>
+      <x-header :style='{backgroundColor: `${skinColor}`}' :left-options="{showBack: showBack}" >{{headerTitle}}</x-header>
     </div>
     <router-view :key="$route.name"></router-view>
     <div v-if="isShowBottomTab" >
-      <bottom-tab />
+      <bottom-tab :skinColor="skinColor" />
     </div>
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
       isShowBottomTab: false, //是否显示bottom tab
       showBack: false, //是否显示返回按钮
       isHideHeader: false, //是否隐藏header,登录页隐藏
+      skinColor: '#4990ee', 
     }
   },
   mounted() {
@@ -38,19 +39,21 @@ export default {
     handleShowBottomTab(path) {
        const condition = (path === '/record') || (path === '/add') || (path === '/me');
        this.isShowBottomTab = condition;
-    }
+    },
   },
   watch: {
     '$route' (to, from) {
       const { meta,path } = to;
       this.headerTitle = meta.title;
       //注册、修改密码、修改记录展示返回按钮 
-      this.showBack = (path === '/register') || (path === '/modifyPwd') || (path === '/edit') || (path === '/forgetPwd'); 
+      this.showBack = (path === '/register') || (path === '/modifyPwd') || (path === '/edit') || (path === '/forgetPwd') || (path === '/changeSkin'); 
       this.handleShowBottomTab(path);
       this.isHideHeader = (path === '/');
-      // console.log('to--->',to)
-    }
+    },
   },
+  updated() {
+    this.skinColor = localStorage.getItem('skinColor');
+  }
 }
 </script>
 
@@ -69,9 +72,6 @@ export default {
   color: #4990ee !important;
 }
 
-.vux-header {
-  background-color: #4990ee !important;
-}
 </style>
 
 <style scoped>

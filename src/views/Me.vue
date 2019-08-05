@@ -8,6 +8,9 @@
         <div @click="goModifyPwd">
 	    	  <cell title="修改密码" is-link ></cell>
         </div>
+        <div @click="changeSkin">
+          <cell title="换肤" is-link ></cell>
+        </div>
         <div @click="showMeDialog">
 	    	  <cell title="关于" is-link></cell>
         </div>
@@ -39,6 +42,9 @@
 
 <script>
 import { Group, Cell, Box, XDialog, } from 'vux'
+import { COLOR1 } from '@/utils/constants';
+
+
 export default {
   components: {
   	Group, Cell, Box, XDialog,
@@ -58,7 +64,11 @@ export default {
     },
     logout() {
       localStorage.clear();
+      localStorage.setItem('skinColor',COLOR1);
       this.$router.push({ path: '/' });
+    },
+    changeSkin() {
+      this.$router.push({ path: '/changeSkin' });
     }
   }
 }

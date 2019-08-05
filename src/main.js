@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import  { ToastPlugin, LoadingPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
+// import store from './store/index.js'
 
 
 Vue.use(ToastPlugin);
@@ -21,6 +22,7 @@ FastClick.attach(document.body)
 new Vue({
   el: '#app',
   router,
+  // store,
   components: { App },
   template: '<App/>'
 })

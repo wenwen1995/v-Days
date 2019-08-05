@@ -16,17 +16,15 @@ router.post('/register', async(ctx, next) => {
     ctx.body = { code:500 };
    }else if(doc) { //用户已注册
     ctx.body = { errorMsg:'该用户已注册！' }; 
+   }else {
+     const userEntity = new userModel({
+      phoneNumber,
+      password: pwd
+     });
+      const result = userEntity.save();
+      ctx.body = { code:200, message: '注册成功' };
    }
  });
-
- const userEntity = new userModel({
-  phoneNumber,
-  password: pwd
- });
-
-  const user = await userEntity.save();
-  ctx.body = { code:200, message:'注册成功！' };
-  return next();  
 });
 
 //用户登录
@@ -44,7 +42,7 @@ router.post('/login',async(ctx,next) => {
       const message = isPwdSame ? '登录成功！' : '密码错误，请重试！';
       if(isPwdSame) {
         //设置token
-        const signOptions = { expiresIn:  "120000", }; //过期日期
+        const signOptions = { expiresIn:  "2h", }; //过期日期
         const token = jwt.sign({ phoneNumber }, "userToken", signOptions);
         ctx.body = { code:200, message, token: token };
 

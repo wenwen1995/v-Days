@@ -30,7 +30,6 @@ router.get('/list',async(ctx, next) => {
                     code: 200,
                     list,
                   };
-                  console.log('total -->',total,list)
                 }).catch(err => {
                   ctx.body = { code:500 };
                 });

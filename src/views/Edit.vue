@@ -10,7 +10,7 @@
         <calendar :readonly="readonly" v-model="calendarDate" title="日期"  placeholder="请选择日期" ></calendar>
       </group>
       <box gap="100px 10px">
-        <x-button :gradients="['#1D62F0', '#19D5FD']"
+        <x-button :gradients="['#7aaee5', '#5e83cd']"
 				  @click.native="onSubmit"
         >确定</x-button>
       </box>

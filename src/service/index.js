@@ -1,7 +1,6 @@
 const Koa = require('koa');
 const cors = require('koa2-cors');
 const koajwt = require('koa-jwt');
-const jwt = require('jsonwebtoken');
 const bodyParser = require('koa-bodyparser');
 const Router = require('koa-router');
 
@@ -42,10 +41,11 @@ app.use(koajwt({ secret: "userToken" }).unless({
 let router = new Router();
 
 //装载user的路由
-router.use('/user',user.routes())
+router.use('/user',user.routes());
 
 //装载record的路由
-router.use('/record',record.routes())
+router.use('/record',record.routes());
+
 
 //加载路由中间件
 app.use(router.routes());

@@ -22,7 +22,7 @@
 		    </flexbox>
 	    </box>
 			<box gap="40px 10px">
-        <x-button :gradients="['#1D62F0', '#19D5FD']"
+        <x-button :gradients="['#7aaee5', '#5e83cd']"
 				  @click.native="onLogin"
         >登录</x-button>
       </box>
@@ -81,11 +81,10 @@
 					post(URL_LOGIN,data)
 					    .then(res => {
 					    	const { token } = res.data;
-					    	console.log('7777===。',token)
 					      this.setDataToStorage({ token, phoneNumber });
 					      
 								this.$router.push({
-										path: '/record'
+										path: '/record',
 								});
 								
 					    }).catch(err => {
@@ -96,9 +95,13 @@
 			},
 			setDataToStorage(data) {
 				const { phoneNumber, token } = data;
+				const skinColor =  localStorage.getItem('skinColor')
+				                 ? localStorage.getItem('skinColor')
+				                 : '#4990ee';
 				localStorage.setItem('phoneNumber',phoneNumber);
 				localStorage.setItem('token',token);
 				localStorage.setItem('token_exp',new Date().getTime());
+				localStorage.setItem('skinColor',skinColor)
 			},
 			goRegister() {
 				this.$router.push({

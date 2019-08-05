@@ -7,6 +7,7 @@ import Edit from '@/views/Edit'
 import Me from '@/views/Me'
 import ModifyPwd from '@/views/ModifyPwd'
 import ForgetPwd from '@/views/ForgetPwd'
+import ChangeSkin from '@/views/ChangeSkin'
 
 Vue.use(Router);
 
@@ -60,6 +61,12 @@ const router = new Router({
       component: ForgetPwd,
       meta: { title: '忘记密码' }
     },
+    {
+      path: '/changeSkin',
+      name: 'changeSkin',
+      component: ChangeSkin,
+      meta: { title: '换肤' }
+    }
   ]
 });
 
@@ -68,13 +75,13 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
   const token_exp = localStorage.getItem('token_exp');
   const now_time = new Date().getTime();
-  console.log(now_time)
+  // console.log(now_time)
   const remainTime = now_time - token_exp; //剩余的时间
-  const time_step = 120000; //2min
+  const time_step = 7200000; //2h
   // 90 * 24 * 60 * 60 * 1000; //3个月的时间，时间为毫秒级别
   const is_time_exceed = (token && remainTime >= time_step); //时间超过了3个月
     
-  console.log('xx ===>',to, from,is_time_exceed)
+  // console.log('xx ===>',to, from,is_time_exceed)
 
   if(token && is_time_exceed){ //token 过期跳转到登录页面
     if(to.name === 'login') { 
