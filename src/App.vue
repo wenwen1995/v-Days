@@ -63,13 +63,18 @@ export default {
 @import '~vux/src/styles/tap.less';
 *{ touch-action: none; } 
 
-.weui-tabbar {
- positon: fixed;
- bottom: 0 !important;
-}
-
 .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label {
   color: #4990ee !important;
+}
+
+.weui-tabbar{
+position: fixed !important;
+bottom: 0 !important;
+z-index: 50 !important;
+}
+
+.vue-label {
+  color: #999;
 }
 
 </style>
@@ -79,4 +84,6 @@ export default {
   position: relative;
   z-index: 100;
 }
+
+
 </style>

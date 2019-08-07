@@ -1,12 +1,13 @@
 import axios from 'axios';
-import Vue from 'vue'
+import Vue from 'vue';
+import { BASE_URL } from '@/utils/constants';
 
 let requestList = [];
-const baseURL = 'http://localhost:3000';
+
 
 
 const instance = axios.create({
-  baseURL, // api 的 base_url
+  baseURL: BASE_URL, // api 的 base_url
   timeout: 10000,
   headers: {
   	'Content-Type': 'application/json;charset=UTF-8',

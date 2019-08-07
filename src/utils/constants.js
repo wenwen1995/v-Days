@@ -1,3 +1,5 @@
+export const BASE_URL = 'http://localhost:3000';
+
 //用户
 export const URL_REGISTER = '/user/register';// 用户注册
 export const URL_LOGIN = '/user/login'; // 用户登录
@@ -8,6 +10,10 @@ export const URL_MODIFY_PWD = '/user/modifyPwd'; // 修改密码
 export const URL_MODIFY_RECORD = '/record/modifyRecord'; // 添加/修改记录
 export const URL_GET_RECORD_LIST = '/record/list'; // 记录list
 export const URL_DELETE_RECORD = '/record/deleteRecord'; // 删除某条记录 
+
+//上传
+export const URL_UPLOAD_IMG = '/img/uploadImg'; //上传图片
+export const URL_DELETE_IMG = '/img/deleteImg'; //获取图片资源
 
 //skin color
 export const COLOR1 = '#4990ee';

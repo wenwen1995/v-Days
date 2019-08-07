@@ -42,7 +42,7 @@ router.post('/modifyRecord',async(ctx,next) => {
       //找出符合条件的id,进行对应内容的修改
       await recordModel.findOneAndUpdate(
        { _id: id },
-       { $set: { title, description, setTimeStamp, phoneNumber } },
+       { $set: { ...ctx.request.body } },
        (err,doc) => {
          if(err) {
           ctx.body = { code:500 };
