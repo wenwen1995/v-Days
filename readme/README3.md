@@ -21,11 +21,11 @@ cnpm install -S koa-multer
   * service/下新建个uploadHandler.js,用来让 koa-multer 处理一下上传的文件存放在哪里，返回的路径名是什么样的
 
 
-  ** 注意： 为了让前端在上传文件后，能及时显示在页面上，需要用到插件 *koa-static*
+  **注意： 为了让前端在上传文件后，能及时显示在页面上，需要用到插件 *koa-static***
    
-   （1）定义存放是文件夹是 static 
+    **(1) 定义存放是文件夹是 static**
 
-   （2）所在的目录是这样的：（service下的index.js 为入口文件） **
+    **(2) 所在的目录是这样的：(service下的index.js 为入口文件)**
 
 如图所示：
 
