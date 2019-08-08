@@ -14,6 +14,7 @@ export const URL_DELETE_RECORD = '/record/deleteRecord'; // 删除某条记录
 //上传
 export const URL_UPLOAD_IMG = '/img/uploadImg'; //上传图片
 export const URL_DELETE_IMG = '/img/deleteImg'; //获取图片资源
+export const URL_UPLOAD_IMG_TO_ALI_CLOUD = '/img/uploadImgToAliClound'; //upload to ali cloud
 
 //skin color
 export const COLOR1 = '#4990ee';

@@ -30,7 +30,8 @@
 <script>
 import { Toast, Calendar, Group, XInput, XButton, Box, dateFormat, XTextarea  } from 'vux';
 import Uploader from '../components/uploader';
-import { URL_MODIFY_RECORD, URL_UPLOAD_IMG, URL_DELETE_IMG, BASE_URL } from '@/utils/constants';
+import { URL_MODIFY_RECORD, URL_UPLOAD_IMG, URL_DELETE_IMG,
+         URL_UPLOAD_IMG_TO_ALI_CLOUD, BASE_URL, } from '@/utils/constants';
 import { post } from '@/utils/request';
 
 
@@ -58,8 +59,9 @@ export default {
 	  	const { setTimeStamp, fileName } = query;
 
       if(fileName) {
-        let url = `${BASE_URL}/${fileName}`;
-        this.images.push(url);
+        // let url = `${BASE_URL}/${fileName}`;
+        // this.images.push(url);
+        this.images.push(fileName);
         this.uploadFileName = fileName;
       }
       
@@ -103,13 +105,19 @@ export default {
     },
     uploadImg(data) {
       this.$vux.loading.show('正在上传...');
-      post(URL_UPLOAD_IMG,data)
+      post(URL_UPLOAD_IMG_TO_ALI_CLOUD,data)
           .then((res) => {
             let { name } = res.data;
-            let url = `${BASE_URL}/${name}`;
+
+            //本地路径local:3000/图片名称
+            // let url = `${BASE_URL}/${name}`;
+            // this.images.push(url);
+            
+            this.images.push(name);
+
             this.uploadFileName = name;
             this.$vux.loading.hide();
-            this.images.push(url);
+            
             console.log('upload res ==?',res,url)
           }).catch(err => {
             this.$vux.loading.hide();

@@ -5,7 +5,6 @@ const bodyParser = require('koa-bodyparser');
 const Router = require('koa-router');
 const static = require('koa-static');
 
-
 //引入连接文件,引入其他router
 const { connect }= require('./init');
 let user = require('../api/user');
@@ -61,6 +60,8 @@ router.use('/img',img.routes());
 //加载路由中间件
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+//上传图片
 
 
 app.listen(3000,() => {
