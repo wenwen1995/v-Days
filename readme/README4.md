@@ -56,18 +56,18 @@ const ali_oss = {
 
 **点击控制台的这里：**
 
-![控制台显示1](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1143_0.png)
+![控制台显示1](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1143.png)
 
 然后会进入，提示这个：
 
-![控制台显示2](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1145_0.png)
+![控制台显示2](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1145.png)
 
 
 由于这两个参数信息很重要，所以我也是新建了个子用户，使用子用户对应的accessKeyId 和 accessKeySecret
 
  * 接下来node 处理对应的上传操作了， 参考官方配置：
 
-![官方上传配置](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1147_0.png)
+![官方上传配置](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1147.png)
 
 
 *注意：*
