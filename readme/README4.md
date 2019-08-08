@@ -231,7 +231,7 @@ methods: {
 显示颜色，现在是如果有上传图片，默认卡片背景显示的是图片，如下图gif
 显示：
 
-![卡片背景为图片](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1.gif)
+-![卡片背景为图片](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-8/1.gif)
 
 
 
