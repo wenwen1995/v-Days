@@ -8,7 +8,7 @@
     >
   	<div class="contentWrap">
   	  <div class="recordWrap" v-for="(item,index) in list">
-        <div :style="{ backgroundColor: `${bgColorOptions[Math.floor(Math.random() * 8)]}`}" class="content">
+        <div :style="showSontentStyle(item)" class="content">
         	<x-icon type="ios-close" size="30" class="deleteIcon" @click="onDeleteCurr(item._id)"></x-icon>
         	<div  @click="onGoDetail(item)">
   	        <p>
@@ -59,6 +59,18 @@ export default {
     this.fetchData();
   }, 
   methods: {
+    showSontentStyle(item) {
+      if(item.fileName) { //有上传图片，则默认背景显示图片
+        return {
+          backgroundImage: `url('${item.fileName}')`,
+          backgroundSize: 'cover'
+        }
+      }else { //无图片，默认从bgColorOptions随机选取颜色显示
+        return {
+          backgroundColor: `${bgColorOptions[Math.floor(Math.random() * 8)]}`
+        }
+      }
+    },
     refresh(done){
       setTimeout(() => {
         this.pageNum = 0;
