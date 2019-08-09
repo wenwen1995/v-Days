@@ -6,6 +6,12 @@
     :minContentHeight="-1" 
     loading-layer-color="#eee"
     >
+    <div class="searchWrap">
+      <x-input placeholder="请输入搜索内容..." v-model="searchValue" :debounce="500" @on-change="fetchData(1)">
+        <img slot="label" style="padding-right:10px;display:block;" src="../assets/search.png" width="24" height="24">
+      </x-input>
+    </div>
+
   	<div class="contentWrap">
   	  <div class="recordWrap" v-for="(item,index) in list">
         <div :style="showSontentStyle(item)" class="content">
@@ -13,21 +19,23 @@
         	<div  @click="onGoDetail(item)">
   	        <p>
   	          {{ item.title }} 
-  	          <span>{{ item.setTimeStamp < Date.now() ? '已经' : '剩余'}}</span>
   	        </p>
-  	        <div class="goDays">{{ caculateDays(item.setTimeStamp) }} 天</div>
+  	        <div class="goDays">
+              <span class="directorText">{{ item.setTimeStamp < Date.now() ? '已经' : '剩余'}}</span>
+             {{ caculateDays(item.setTimeStamp) }} 天
+            </div>
   	        <div class="description">{{ item.description }}</div>
   	        <br/>
   	        <span class="settingTime">距离 {{ formateDate(item.setTimeStamp) }}</span>
   	      </div>
         </div>
-  	  </div>
+  	  </div>      
   	</div>
   </scroller>
 </template>
 
 <script>
-import { dateFormat } from 'vux';
+import { dateFormat, XInput  } from 'vux';
 import { URL_GET_RECORD_LIST, URL_DELETE_RECORD } from '@/utils/constants';
 import { get, post } from '@/utils/request';
 import { translatorRecordList } from '@/utils/translator';
@@ -39,6 +47,9 @@ const bgColorOptions = ['#90829E','#F29F8C','#FFCCCC',
                        ]
 
 export default {
+  components: {
+    XInput
+  },
   name: 'Record',
   data () {
     return {
@@ -48,6 +59,7 @@ export default {
       pageSize: 5,  //每次请求多少条
       total: 0, //总页数
       pageNum: 0, //当前获取返回数据的数量
+      searchValue: '', //搜索的值
     }
   },
   created() {
@@ -99,8 +111,8 @@ export default {
     },
     fetchData(page = 1,fromLoadMore = false) {
       const phoneNumber = localStorage.getItem('phoneNumber');
-      const { pageSize } = this;
-      const url = `${URL_GET_RECORD_LIST}?page=${page}&pageSize=${pageSize}&phoneNumber=${phoneNumber}`;
+      const { pageSize, searchValue, } = this;
+      const url = `${URL_GET_RECORD_LIST}?page=${page}&pageSize=${pageSize}&phoneNumber=${phoneNumber}&searchValue=${searchValue}`;
       get(url).then((res) => {
         const { list, total } = res.data;
         const newList = translatorRecordList(list);
@@ -151,10 +163,6 @@ export default {
 
 
 <style scoped>
-  .contentWrap {
-    margin-top: 55px;
-  }
-
  .recordWrap {
    position: relative;
    z-index: 1;
@@ -184,6 +192,10 @@ export default {
   fill: #fff;
  }
 
+ .directorText {
+  font-size: 14px;
+ }
+
  .goDays {
  	font-size: 36px;
  	border-bottom: 1px dashed #fff;
@@ -201,6 +213,12 @@ export default {
 
  .settingTime {
  	 font-size: 16px;
+ }
+
+ .searchWrap {
+   border: 1px solid lightgray;
+   border-radius: 7px;
+   margin: 50px 5px 0 5px;
  }
 </style>
 

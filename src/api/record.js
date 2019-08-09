@@ -4,16 +4,32 @@ const recordModel = require('../service/model/record');
 
 //获取记录list 进行分页
 router.get('/list',async(ctx, next) => {
-  let { page, pageSize, phoneNumber } = ctx.request.query;
+  let { page, pageSize, phoneNumber, searchValue } = ctx.request.query;
   page = Number(page - 1);
   pageSize = Number(pageSize);
 
+  //搜索条件不区分大小写
+  const reg = new RegExp(searchValue,'i');
 
   //以手机号作为标识进行唯一查找
-  const allCount = recordModel.find({ "phoneNumber": phoneNumber });
+  const allCount = recordModel.find(
+  {
+   $or: [ //多条件，数组
+    { title: { $regex: reg } },
+    { description: { $regex: reg } },
+   ] 
+  }
+  );
 
   //获得结果按照id降序排，即时间最新的在最前面，最早的在后面
-  const result = recordModel.find({ "phoneNumber": phoneNumber })
+  const result = recordModel.find(
+             {
+               $or: [ //多条件，数组
+                { title: { $regex: reg } },
+                { description: { $regex: reg } },
+               ] 
+              }
+             )
              .skip(page * pageSize)
              .limit(pageSize)
              .sort({ '_id': -1 })
