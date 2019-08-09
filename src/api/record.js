@@ -14,6 +14,7 @@ router.get('/list',async(ctx, next) => {
   //以手机号作为标识进行唯一查找
   const allCount = recordModel.find(
   {
+   phoneNumber,
    $or: [ //多条件，数组
     { title: { $regex: reg } },
     { description: { $regex: reg } },
@@ -24,6 +25,7 @@ router.get('/list',async(ctx, next) => {
   //获得结果按照id降序排，即时间最新的在最前面，最早的在后面
   const result = recordModel.find(
              {
+               phoneNumber,
                $or: [ //多条件，数组
                 { title: { $regex: reg } },
                 { description: { $regex: reg } },
