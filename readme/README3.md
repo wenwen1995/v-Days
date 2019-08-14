@@ -18,7 +18,7 @@
 cnpm install -S koa-multer
 ```
 
-  * service/下新建个uploadHandler.js,用来让 koa-multer 处理一下上传的文件存放在哪里，返回的路径名是什么样的
+  * v-Days-koa-server/service/下新建个uploadHandler.js,用来让 koa-multer 处理一下上传的文件存放在哪里，返回的路径名是什么样的
 
 
   **注意： 为了让前端在上传文件后，能及时显示在页面上，需要用到插件 *koa-static***
@@ -39,7 +39,7 @@ const multer = require('koa-multer'); //上传文件的中间件
 
 let storage = multer.diskStorage({
   destination: function(req,file,cb) { //配置图片上传的目录
-    cb(null,'../../static/');
+    cb(null,'./static/');
   },
   filename: function(req,file,cb) { //上传后完成重命名文件名
     const fileFormat = file.originalname.split('.');
@@ -74,7 +74,7 @@ module.exports = upload;
 cnpm install -S koa-static
 ```
 
- * service/index.js 在原来的基础上，再配置对应的上传接口
+ * v-Days-koa-server/service/index.js 在原来的基础上，再配置对应的上传接口
  
 ```js
 const Koa = require('koa');
@@ -87,9 +87,9 @@ const static = require('koa-static');
 
 //引入连接文件,引入其他router
 const { connect }= require('./init');
-let user = require('../api/user');
-let record = require('../api/record');
-let img = require('../api/upload'); //图片
+let user = require('./api/user');
+let record = require('./api/record');
+let img = require('./api/upload'); //图片
 
 const app = new Koa();
 
@@ -120,7 +120,7 @@ app.use((ctx,next) => {
 //}));
 
 //这里超重要！！指定服务器的静态资源地址，在当前目录下的文件可以直接localhost:3000/filename访问到
-app.use(static('../../static/')); //该目录是相对于server入口文件，即server下的index.js而言的
+app.use(static('./static/')); //该目录是相对于server入口文件，即server下的index.js而言的
 
 
 let router = new Router();

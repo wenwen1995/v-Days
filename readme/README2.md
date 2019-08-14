@@ -30,10 +30,10 @@ tabbar的背景色， 更改颜色后，在
 
 最终代码的实现可以看 
   
-  - src/App.vue(更改header颜色)
-  - src/commponents/Tarbar.vue(更改tarbar选中的图片)
-  - src/views/login.vue(实现设置默认皮肤)
-  - src/views/ChangeSkin.vue(实现换肤)
+  - front/src/App.vue(更改header颜色)
+  - front/src/commponents/Tarbar.vue(更改tarbar选中的图片)
+  - front/src/views/login.vue(实现设置默认皮肤)
+  - front/src/views/ChangeSkin.vue(实现换肤)
 
 
 
