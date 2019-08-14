@@ -23,9 +23,9 @@ cnpm install -S koa-multer
 
   **注意： 为了让前端在上传文件后，能及时显示在页面上，需要用到插件 *koa-static***
    
-    **(1) 定义存放是文件夹是 static**
+  **(1) 定义存放是文件夹是 static**
 
-    **(2) 所在的目录是这样的：(service下的index.js 为入口文件)**
+  **(2) 所在的目录是这样的：(service下的index.js 为入口文件)**
 
 如图所示：
 
