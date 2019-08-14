@@ -52,6 +52,7 @@ node index.js
 ![前端目录结构图](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-14/1.png)
 
 **后端目录结构：**
+
 ![后端目录结构图](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-14/2.png)
 
 *写的不太全，具体看对应文件好啦,这个项目还是练手项目，所以初期比较简单，后期会再支持`图片上传`、`换肤`、`模糊搜索获取记录`、`微信授权登录`等功能~*
