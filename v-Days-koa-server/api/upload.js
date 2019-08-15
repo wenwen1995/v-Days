@@ -11,15 +11,10 @@ const OSS = require('ali-oss');
 const fs = require('fs');
 let client = new OSS({
   region: 'oss-cn-hangzhou',
-  accessKeyId: 'LTAIphCBBIA8Lvgx',
-  accessKeySecret: 'wVKlVEgfIu0aDnICOidEp1ApXIenfr',
+  accessKeyId: '*******',
+  accessKeySecret: '*******',
   bucket: 'wenwen-img-bucket',
 });
-const ali_oss = {
-  bucket: 'wenwen-img-bucket',
-  endPoint: 'oss-cn-hangzhou.aliyuncs.com',
-};
-
 
 //删除图片
 router.post('/deleteImg',async(ctx,next) => {
