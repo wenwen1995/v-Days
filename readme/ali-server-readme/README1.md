@@ -55,6 +55,33 @@ gcc -v
 
 [详见解决方案](/README2.md)
 
+3、装mongodb,要装符合条件的mongodb版本。这里因为windows电脑上装的是4.0.10，所以还是参考这个链接 [阿里云部署 nodejs+mongoDB 傻瓜教程](https://zhuanlan.zhihu.com/p/24474840)进行安装和对应的配置！
+
+**注意： 安装大概耗费了40min - 1h左右，这个过程不用太着急，可以边做别的边看下载进度**
+
+装好后，mongodb的data和log的配置，以及配置文件的书写是参考该链接的: [centos mongodb配置](https://itjh.net/2016/07/11/centos-install-mongodb/)， 写得不错
+
+配置好后，进入mongodb的命令模式下，如下, 输入测试的用户名和密码，若成功会返回1
+
+![测试mongodb](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-16/12.png)
+
+但是这里遇到问题，因为第一次是手动启动，后面再进入mongodb目录下
+
+```js
+cd /usr/local/mongodb/bin
+
+./mongo
+```
+
+上次的mongodb被关闭锁定了，所以再执行上述命令会报错：
+
+![mongodb锁定报错](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-16/13.png)
+
+如何解决呢？
+
+详见[详见centos mongodb启动失败解决方案](/README3.md)
+
+
 
 
 

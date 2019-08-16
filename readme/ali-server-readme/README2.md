@@ -79,5 +79,7 @@ make install
     * **npm 6.9.0** 
     * **ali-oss 6.0.0**
 
+![node、npm版本](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-16/10.png)
 
+![ali-oss版本](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-16/11.png)
 
