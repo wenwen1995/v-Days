@@ -1,4 +1,6 @@
-export const BASE_URL = 'http://localhost:3000';
+const debug = true;
+const BASE_HOST = debug ? 'http://localhost': 'http://47.98.164.145';
+export const BASE_URL = `${BASE_HOST}:3000`;
 
 //用户
 export const URL_REGISTER = '/user/register';// 用户注册
