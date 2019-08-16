@@ -66,5 +66,6 @@ node index.js
   * [踩坑记](/readme/README1.md)
   * [换肤记录](/readme/README2.md)
   * [上传照片记](/readme/README3.md)
-  * [上传照片到阿里云对象存储记](/readme/README4.md)
+  * [上传照片到阿里云对象存储 ali-oss 记](/readme/README4.md)
   * [记录页 增加模糊搜索记](/readme/README5.md)
+  * [部署vue 前端项目，后端koa node项目到阿里云服务器 记](/readme/ali-server-readme/README1.md)
