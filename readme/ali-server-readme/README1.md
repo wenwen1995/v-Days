@@ -175,3 +175,28 @@ exception: connect failed
 5、使用nginx 代理，配置通过公网ip 访问时，正常情况下，若都配置完成，应该访问ip ,会出现如下界面：
 
 ![nginx 默认界面](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-16/32.png)
+
+但是我的刚开始访问一直无法出现该页面，最后查了2个多小时，终于可以了。
+
+中间参考的链接内容如下，给了很大的帮助：
+
+参考的 jspang老师nginx 来配置：  [jspang老师nginx](https://jspang.com/posts/2018/10/05/nginx.html)
+
+csdn这篇文章：  [csdn nginx配置](https://blog.csdn.net/qq_29767317/article/details/78579800)给了很大的启发和帮助，解决了nginx 不能访问的问题
+
+
+ * 购买的是阿里云Ecs 服务器（1年） 
+ * 服务器的操作系统是 cent OS 7.4 64位版本
+
+#### 搭建nginx : 
+
+  * 建议对linux系统不太熟的小白，跟我差不多的，下载 `xftp 软件` 来辅助自己理解系统内部的文件，同时为日后上传文件到服务器也做个准备
+
+  * 这里，nginx 搭建主要看 `jspang 老师的上述的课程3`，讲述的已经很清楚了
+
+#### 解决nginx不能访问的问题：
+
+ * 检查服务端服务是否启动成功
+ * 在服务端使用wget和curl测试下返回的是否正常
+ * 浏览器wget或者curl等软件访问不了Ngixn页面
+
