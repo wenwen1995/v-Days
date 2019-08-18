@@ -167,5 +167,190 @@ csdn这篇文章：  [csdn nginx配置](https://blog.csdn.net/qq_29767317/articl
 
  * 检查服务端服务是否启动成功
  * 在服务端使用wget和curl测试下返回的是否正常
- * 浏览器wget或者curl等软件访问不了Ngixn页面
+ * 浏览器wget或者curl等软件访问不了Nginx页面
+
+
+`检查服务端服务是否启动成功：`
+
+（1）查看nginx 是否启动，输入命令：
+
+```js
+ps -ef |grep nginx
+```
+
+出现如下，有nginx的，说明启动成功
+
+![nginx 启动成功图](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/1.png)
+
+___注：我这里一开始是没有nginx服务的，原来是在安装完nginx后，没有将服务开起来。___
+
+开nginx 服务 =》 安装好nginx后，再输入命令
+
+```js
+nginx 
+```
+
+即可。
+
+（2） 检查80端口是否在监听状态
+输入命令: 
+
+```js
+lsof -i :80
+```
+
+![80端口监听图](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/2.png)
+
+
+**注： 这里当时报错 : lsof command not found (找不到命令lsof)**
+
+解决办法：我们可以通过yum来安装:
+
+```js
+yum install lsof
+```
+
+
+安装成功后，再试上述命令，则不会报错了
+
+```js
+netstat -lnt |grep 80
+```
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/3.png)
+
+
+发现一切正常。
+
+**在服务端使用wget和curl测试下返回的是否正常**
+
+
+（1） 输入命令进行wget 测试：
+
+```js
+wget 127.0.0.1
+```
+
+获的以下信息：
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/4.png)
+
+即wget 测试是 url 是没问题的。
+
+（2） 输入命令进行curl 测试：
+
+```js
+curl 127.0.0.1
+```
+
+返回信息：
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/5.png)
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/6.png)
+
+即返回正常
+
+上述即排查检测nginx 是否在服务器端的有错误
+
+`浏览器，wget或者curl等软件访问不了Ngixn页面`
+
+（1）可能是防火墙的开启的原因，所以要关闭防火墙 iptables
+
+输入命令，查看防火墙是开启还是关闭状态
+
+```js
+getenforce
+```
+
+返回信息：
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/7.png)
+
+永久关闭防火墙，输入下面命令
+
+```js
+vim /etc/selinux/config
+
+SELINUX=disabled #需要将此行更改为disabled 
+SELINUXTYPE=targeted
+```
+
+
+再输入命令，检查防火墙的状态
+
+```js
+service iptables status
+```
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/8.png)
+
+问题不是出在nginx上，而是出在防火墙上，所以给iptable上添加80端口，输入下列命令，进入编辑模式：
+
+```js
+vi /etc/sysconfig/iptables
+```
+
+
+红色圈出的部分，原来是22，改成80后保存并推出，如下：
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/9.png)
+
+执行下拉重启命令，再访问ip就可以啦（这里我的ip是： http://47.98.164.145/）
+
+```js
+/etc/init.d/iptables restart
+```
+
+（2） 本地客户端测试，
+ 
+ *  ping 自己的服务器ip, 这里我的是47.98.164.145
+ 
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/10.png)
+
+
+ctrl + C 结束 ping 通的命令
+
+*   telnet服务端ip， 得到结果：
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/11.png)
+
+
+安装telnet成功后，重新执行上述命令：
+
+```js
+yum -y install telnet
+```
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/12.png)
+
+
+* 使用curl 进行命令检测
+
+```js
+curl -i 47.98.164.145
+```
+
+
+得到结果：
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/13.png)
+
+此时再访问浏览器ip,发现成功：
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/14.png)
+
+
+
+6、使用阿里云宝塔面板，可以更好的监控自己的服务器，安装各种东西，mysql 主从复制， 是个可视化面板，
+
+首先在centos 下安装宝塔，大概需要5-10分钟：
+
+```js
+yum install -y wget && wget -O install.sh http://download.bt.cn/install/install.sh && sh install.sh
+```
+
+安装结束后，如果成功会出现这样对应的访问ip, 用户名和密码，如下图：
+
+![](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-18/15.png)
+
+但一般直接访问 自己的公网ip +8888是不会成功的，具体原因加如何配置成功看这篇链接：  [https://blog.csdn.net/xiangshangbashaonian/article/details/79918567](https://blog.csdn.net/xiangshangbashaonian/article/details/79918567)
+
 
