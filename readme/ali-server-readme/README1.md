@@ -53,7 +53,7 @@ gcc -v
     * **一种升级 gcc 版本，**
     * **一种是降级node 的版本**
 
-[详见解决方案](/README2.md)
+[详见解决方案](/readme/ali-server-readme/README2.md)
 
 3、装mongodb,要装符合条件的mongodb版本。这里因为windows电脑上装的是4.0.10，所以还是参考这个链接 [阿里云部署 nodejs+mongoDB 傻瓜教程](https://zhuanlan.zhihu.com/p/24474840)进行安装和对应的配置！
 
@@ -79,7 +79,7 @@ cd /usr/local/mongodb/bin
 
 如何解决呢？
 
-详见[详见centos mongodb启动失败解决方案](/README3.md)
+详见[详见centos mongodb启动失败解决方案](/readme/ali-server-readme/README3.md)
 
 4、这里在用linux 下，用如下命令
 
@@ -139,7 +139,7 @@ exception: connect failed
 
 [解决mongodb Error connecting to 127.0.0.1:27017 :: caused by :: Connection refused :](https://blog.csdn.net/wyodyia/article/details/7965665)
 
-详见[mongodb Error：127.0.0.1:27017 :: caused by :: Connection refused :解决方案](/README4.md)
+详见[mongodb Error：127.0.0.1:27017 :: caused by :: Connection refused :解决方案](/readme/ali-server-readme/README4.md)
 
 5、使用nginx 代理，配置通过公网ip 访问时，正常情况下，若都配置完成，应该访问ip ,会出现如下界面：
 
