@@ -75,9 +75,12 @@ make install
 
 
 所以综上所述，最终项目装的版本分别是
-    * **node 10.16.0**
-    * **npm 6.9.0** 
-    * **ali-oss 6.0.0**
+
+   *  **node 10.16.0**
+    
+   *  **npm 6.9.0** 
+  
+   *  **ali-oss 6.0.0**
 
 ![node、npm版本](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-16/10.png)
 
