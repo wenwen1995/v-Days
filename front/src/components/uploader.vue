@@ -79,10 +79,6 @@
         type: String,
         default: 'img'
       },
-      params: {
-        type: Object,
-        default: null
-      },
     },
     data() {
       return {
@@ -104,13 +100,6 @@
         }
 
         console.log('file is ==>',fileInfo)
-
-        if(this.params) {
-          for(let key in this.params) {
-            formData.append(key,this.params[key]);
-          }
-        }
-
         this.$emit('uploadImg',formData);
 
       },

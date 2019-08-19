@@ -55,12 +55,13 @@ router.get('/list',async(ctx, next) => {
 
 //添加记录 or 修改记录
 router.post('/modifyRecord',async(ctx,next) => {
-  const { id,title, description, setTimeStamp, phoneNumber } = ctx.request.body;
+  const { id, } = ctx.request.body;
+  const newObj = Object.assign({},ctx.request.body);
   if(id) { //为修改
       //找出符合条件的id,进行对应内容的修改
       await recordModel.findOneAndUpdate(
        { _id: id },
-       { $set: { ...ctx.request.body } },
+       { $set: newObj },
        (err,doc) => {
          if(err) {
           ctx.body = { code:500 };
@@ -71,7 +72,7 @@ router.post('/modifyRecord',async(ctx,next) => {
           }
        })
   }else { //新增
-    const recordEntity = new recordModel({ ...ctx.request.body });
+    const recordEntity = new recordModel(newObj);
     await recordEntity.save();
     ctx.body = { code:200, message:'新增成功！' };
     return next();  

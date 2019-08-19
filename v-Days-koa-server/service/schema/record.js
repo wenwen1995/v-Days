@@ -12,7 +12,7 @@ const recordSchema = new Schema({
     default: Date.now
   }, //设置的时间戳
   phoneNumber: { type: String },
-  fileName: { type: String  }, //为了跟图片表之间有关联
+  filePath: { type: String  }, //为了跟图片表之间有关联
 });
 
 module.exports = recordSchema;

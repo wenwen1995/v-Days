@@ -10,10 +10,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "ali-oss": "^6.1.1",
+    "ali-oss": "^6.0.0",
     "crypto": "^1.0.1",
     "glob": "^7.1.4",
-    "gojs": "^2.0.15",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",

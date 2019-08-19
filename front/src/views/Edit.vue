@@ -56,13 +56,13 @@ export default {
   mounted() {
   	const { query } = this.$route;
   	if(Object.keys(query).length) {
-	  	const { setTimeStamp, fileName } = query;
+	  	const { setTimeStamp, filePath } = query;
 
-      if(fileName) {
-        // let url = `${BASE_URL}/${fileName}`;
+      if(filePath) {
+        // let url = `${BASE_URL}/${filePath}`;
         // this.images.push(url);
-        this.images.push(fileName);
-        this.uploadFileName = fileName;
+        this.images.push(filePath);
+        this.uploadFileName = filePath;
       }
       
 	  	this.calendarDate = dateFormat(setTimeStamp, 'YYYY-MM-DD');
@@ -93,7 +93,7 @@ export default {
       const phoneNumber = localStorage.getItem('phoneNumber');
       const { title, description, id, uploadFileName } = this;
       const setTimeStamp = Date.parse(new Date(this.calendarDate));
-      const data = { title, description, setTimeStamp, phoneNumber, fileName: uploadFileName };
+      const data = { title, description, setTimeStamp, phoneNumber, filePath: uploadFileName };
       if(id) { data.id = id; }
 
 
@@ -103,9 +103,11 @@ export default {
             this.$router.push('/record');
           })
     },
-    uploadImg(data) {
+    uploadImg(formData) {
+      const { id } = this;
+      formData.append("id",id);
       this.$vux.loading.show('正在上传...');
-      post(URL_UPLOAD_IMG_TO_ALI_CLOUD,data)
+      post(URL_UPLOAD_IMG_TO_ALI_CLOUD,formData)
           .then((res) => {
             let { name } = res.data;
 
@@ -126,7 +128,7 @@ export default {
     },
     removeImg() {
       const { uploadFileName,id } = this;
-      const data = { fileName: this.uploadFileName };
+      const data = { filePath: this.uploadFileName };
       if(id) { data.id = id; }
 
       post(URL_DELETE_IMG,{...data})
