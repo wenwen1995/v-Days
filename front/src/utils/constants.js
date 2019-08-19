@@ -1,4 +1,4 @@
-const debug = true;
+const debug = false;
 const BASE_HOST = debug ? 'http://localhost': 'http://47.98.164.145';
 export const BASE_URL = `${BASE_HOST}:3000`;
 
