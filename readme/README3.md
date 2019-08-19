@@ -160,13 +160,14 @@ const Router = require('koa-router');
 let router = new Router();
 
 //存储图片
-router.post('/uploadImg',upload.single('file'), async(ctx, next) => { //这里前端传来的form表单中的文件键名是啥，就写啥
+router.post('/uploadImg',upload.single('file'), async(ctx, next) => {
   const { file } = ctx.req;
   console.log('文件类型：%s', file.mimetype);
   console.log('原始文件名：%s', file.originalname);
   console.log('文件大小：%s', file.size);
   console.log('文件保存路径：%s', file.path);
   try {
+
     //获取图片的路径
     const list = file.path.split('\\');
     const fileFinalName = list[list.length-1]; //截取最终的文件名
@@ -174,11 +175,26 @@ router.post('/uploadImg',upload.single('file'), async(ctx, next) => { //这里�
     //上传图片到数据库中
     const uploadEntity = new uploadModel({
       fileName: fileFinalName,
-      filePath: file.path,
+      filePath: file.path 
     });
     await uploadEntity.save();
 
-    ctx.body = {  code: 200, name: fileFinalName,  message: '上传成功！' };
+    //详情的上传图片，更新到对应的数据库
+    if(ctx.req.body.id) {
+       const { id } = ctx.req.body;
+       return recordModel.findOneAndUpdate({ "_id": id },{ $set: { "filePath": file.path } },(err,doc) => {
+        if(err) {
+          ctx.body = { code: 500 };
+        }else if(doc) {
+          ctx.body = {  code: 200, name: file.path,  message: '上传成功！' };
+        }else {
+          ctx.body = { errorMsg: '上传出错！' };
+        }
+
+      })  
+    }else {
+      ctx.body = {  code: 200, name: file.path,  message: '上传成功！' };
+    }
 
   }catch(err) {
     console.log('err is ==>',err)
@@ -187,9 +203,6 @@ router.post('/uploadImg',upload.single('file'), async(ctx, next) => { //这里�
     }
   }
 });
-
-
-module.exports = router;
 ```
 
 
@@ -310,10 +323,6 @@ module.exports  = uploadModel;
         type: String,
         default: 'img'
       },
-      params: {
-        type: Object,
-        default: null
-      },
     },
     data() {
       return {
@@ -335,13 +344,6 @@ module.exports  = uploadModel;
         }
 
         console.log('file is ==>',fileInfo)
-
-        if(this.params) {
-          for(let key in this.params) {
-            formData.append(key,this.params[key]);
-          }
-        }
-
         this.$emit('uploadImg',formData);
 
       },
@@ -467,9 +469,11 @@ module.exports  = uploadModel;
  },
  methods: {
    //...
-   uploadImg(data) {
+   uploadImg(formData) {
+      const { id } = this;
+      formData.append("id",id);
       this.$vux.loading.show('正在上传...');
-      post(URL_UPLOAD_IMG_TO_ALI_CLOUD,data)
+      post(URL_UPLOAD_IMG_TO_ALI_CLOUD,formData)
           .then((res) => {
             let { name } = res.data;
 
@@ -488,7 +492,7 @@ module.exports  = uploadModel;
     },
     removeImg() {
       const { uploadFileName,id } = this;
-      const data = { fileName: this.uploadFileName };
+      const data = { filePath: this.uploadFileName };
       if(id) { data.id = id; }
 
       post(URL_DELETE_IMG,{...data})
@@ -515,7 +519,7 @@ module.exports  = uploadModel;
 //步骤1： 发起删除请求
 removeImg() {
       const { uploadFileName,id } = this;
-      const data = { fileName: this.uploadFileName };
+      const data = { filePath: this.uploadFileName };
       if(id) { data.id = id; }
 
       post(URL_DELETE_IMG,{...data})
@@ -527,27 +531,28 @@ removeImg() {
 
 //步骤2，删除对应的表记录
 //api/upload.js
+//删除图片
 router.post('/deleteImg',async(ctx,next) => {
-  const { fileName, id } = ctx.request.body;
-
-  await uploadModel.findOneAndRemove({"fileName": fileName},(err,doc) => {
+  const { filePath, id } = ctx.request.body;
+  await uploadModel.findOneAndRemove({"filePath": filePath},(err,doc) => {
     if(err) {
       ctx.body = { code: 500 };
     }else if(doc) {
       ctx.body = { code: 200, message: '删除成功！' };
     }
-  });
 
+  });
+  
   if(id) { //为修改记录，删除时，同时删除对应记录表中的数据
-    return recordModel.findOneAndUpdate({ fileName, },{ "fileName": "" } ,(err,doc) => {
+    return recordModel.findOneAndUpdate({ "_id": id },{ $set: { "filePath": "" } } ,(err,doc) => {
       if(err) {
         ctx.body = { code: 500 };
       }else if(doc) {
         ctx.body = { code: 200, message: '删除成功！' };
       }else {
-        ctx.body = { code: 200, message: '删除失败！' };
+        ctx.body = { errorMsg: '删除失败！' };
       }
-      
+
     })  
   }
 });
@@ -555,7 +560,7 @@ router.post('/deleteImg',async(ctx,next) => {
 //步骤3,前台响应，进行删除
 removeImg() {
       const { uploadFileName,id } = this;
-      const data = { fileName: this.uploadFileName };
+      const data = { filePath: this.uploadFileName };
       if(id) { data.id = id; }
 
 
