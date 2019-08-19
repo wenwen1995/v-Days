@@ -126,12 +126,11 @@ router.post('/uploadImgToAliClound',upload.single('file'), async(ctx, next) => {
 
 ```js
 router.post('/uploadImgToAliClound',upload.single('file'), async(ctx, next) => {
-  const { file } = ctx.req;
+  const { file, } = ctx.req;
   console.log('文件类型：%s', file.mimetype);
   console.log('原始文件名：%s', file.originalname);
   console.log('文件大小：%s', file.size);
   console.log('文件保存路径：%s', file.path);
-
   try {
     //获取图片的路径
     const list = file.path.split('\\');
@@ -139,22 +138,37 @@ router.post('/uploadImgToAliClound',upload.single('file'), async(ctx, next) => {
 
     let result = await client.put(fileFinalName, file.path); //获得的是个对象
 
-    if(result.res.status === 200) {
+    if(result.res && (result.res.status === 200)) {
       const { url } = result;
 
-      //上传图片到数据库中
+      //上传图片到uploads 表中
       const uploadEntity = new uploadModel({
         fileName: fileFinalName,
         filePath: url
       });
       await uploadEntity.save();
-      
-      ctx.body = {  code: 200, name: url,  message: '上传成功！' };
-    }else {
+
+      //详情的上传图片，更新到对应的数据库
+      if(ctx.req.body.id) {
+         const { id } = ctx.req.body;
+         return recordModel.findOneAndUpdate({ "_id": id },{ "filePath": url } ,(err,doc) => {
+          if(err) {
+            ctx.body = { code: 500 };
+          }else if(doc) {
+            ctx.body = {  code: 200, name: url,  message: '上传成功！' };
+          }else {
+            ctx.body = { errorMsg: '上传出错！' };
+          }
+
+        })  
+      }else {
+        ctx.body = {  code: 200, name: url,  message: '上传成功！' };
+      }
+
+    } else {
       ctx.body = {  errorMsg: '上传出错！' };
     }
 
-    // console.log('result is ===>',result);
   } catch (err) {
     console.log('upload to cloud',err);
     ctx.body = {
@@ -215,7 +229,7 @@ methods: {
     },
     removeImg() {
       const { uploadFileName,id } = this;
-      const data = { fileName: this.uploadFileName };
+      const data = { filePath: this.uploadFileName };
       if(id) { data.id = id; }
       post(URL_DELETE_IMG,{...data})
           .then(res => {
