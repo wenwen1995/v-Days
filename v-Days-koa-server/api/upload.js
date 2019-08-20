@@ -1,4 +1,4 @@
-//上传
+﻿//上传
 const fs = require('fs');
 const path = require('path');
 const uploadModel = require('../service/model/upload');
@@ -86,22 +86,22 @@ router.post('/uploadImg',upload.single('file'), async(ctx, next) => {
     deleteLocalFolderImg(localFileUrl);
 
     //详情的上传图片，更新到对应的数据库
-    if(ctx.req.body.id) {
-       const { id } = ctx.req.body;
-       return recordModel.findOneAndUpdate({ "_id": id },{ $set: { "filePath": file.path } },(err,doc) => {
-        if(err) {
-          ctx.body = { code: 500 };
-        }else if(doc) {
-          ctx.body = {  code: 200, name: file.path,  message: '上传成功！' };
-        }else {
-          ctx.body = { errorMsg: '上传出错！' };
-        }
+    // if(ctx.req.body.id) {
+    //    const { id } = ctx.req.body;
+    //    return recordModel.findOneAndUpdate({ "_id": id },{ $set: { "filePath": file.path } },(err,doc) => {
+    //     if(err) {
+    //       ctx.body = { code: 500 };
+    //     }else if(doc) {
+    //       ctx.body = {  code: 200, name: file.path,  message: '上传成功！' };
+    //     }else {
+    //       ctx.body = { errorMsg: '上传出错！' };
+    //     }
 
-        console.log(855,err,doc,fileName)
-      })  
-    }else {
+    //     console.log(855,err,doc,fileName)
+    //   })  
+    // }else {
       ctx.body = {  code: 200, name: file.path,  message: '上传成功！' };
-    }
+    // }
 
   }catch(err) {
     console.log('err is ==>',err)
@@ -144,21 +144,21 @@ router.post('/uploadImgToAliClound',upload.single('file'), async(ctx, next) => {
       deleteLocalFolderImg(localFileUrl);
 
       //详情的上传图片，更新到对应的数据库
-      if(ctx.req.body.id) {
-         const { id } = ctx.req.body;
-         return recordModel.findOneAndUpdate({ "_id": id },{ "filePath": url } ,(err,doc) => {
-          if(err) {
-            ctx.body = { code: 500 };
-          }else if(doc) {
-            ctx.body = {  code: 200, name: url,  message: '上传成功！' };
-          }else {
-            ctx.body = { errorMsg: '上传出错！' };
-          }
+      // if(ctx.req.body.id) {
+      //    const { id } = ctx.req.body;
+      //    return recordModel.findOneAndUpdate({ "_id": id },{ "filePath": url } ,(err,doc) => {
+      //     if(err) {
+      //       ctx.body = { code: 500 };
+      //     }else if(doc) {
+      //       ctx.body = {  code: 200, name: url,  message: '上传成功！' };
+      //     }else {
+      //       ctx.body = { errorMsg: '上传出错！' };
+      //     }
 
-        })  
-      }else {
+      //   })  
+      // }else {
         ctx.body = {  code: 200, name: url,  message: '上传成功！' };
-      }
+      // }
 
     } else {
       ctx.body = {  errorMsg: '上传出错！' };
