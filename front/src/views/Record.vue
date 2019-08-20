@@ -75,7 +75,7 @@ export default {
       if(item.filePath) { //有上传图片，则默认背景显示图片
         return {
           backgroundImage: `url('${item.filePath}')`,
-          backgroundSize: 'cover'
+          backgroundSize: '100% 100%',
         }
       }else { //无图片，默认从bgColorOptions随机选取颜色显示
         return {

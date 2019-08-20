@@ -77,8 +77,8 @@ router.beforeEach((to, from, next) => {
   const now_time = new Date().getTime();
   // console.log(now_time)
   const remainTime = now_time - token_exp; //剩余的时间
-  const time_step = 7200000; //2h
-  // 90 * 24 * 60 * 60 * 1000; //3个月的时间，时间为毫秒级别
+  const time_step = 90 * 24 * 60 * 60 * 1000; //3个月的时间，时间为毫秒级别
+  // 7200000; //2h
   const is_time_exceed = (token && remainTime >= time_step); //时间超过了3个月
     
   // console.log('xx ===>',to, from,is_time_exceed)
