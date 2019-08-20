@@ -1,4 +1,5 @@
 //上传
+const fs = require('fs');
 const path = require('path');
 const uploadModel = require('../service/model/upload');
 const recordModel = require('../service/model/record');
@@ -8,7 +9,6 @@ let router = new Router();
 
 //使用阿里云对象存储，初始配置
 const OSS = require('ali-oss');
-const fs = require('fs');
 let client = new OSS({
   region: 'oss-cn-hangzhou',
   accessKeyId: '********',
@@ -16,13 +16,28 @@ let client = new OSS({
   bucket: 'wenwen-img-bucket',
 });
 
+//删除本地文件夹
+function deleteLocalFolderImg(url,imgUrl) {
+ let files = [];
+ const isExistUrl = fs.existsSync(url);
+ console.log('isExistUrl --->',isExistUrl);
+ if(isExistUrl) {
+  files = fs.readdirSync(url);
+  console.log('files is ==>',files);
+  files.forEach((file,index) => {
+    // 得到图片路径，删除本地文件
+    const curPath = path.join(url,file);
+    console.log('curPath --->',curPath);
+    curPath && fs.unlinkSync(curPath);
+  })
+ }
+}
 
 
 //删除图片
 router.post('/deleteImg',async(ctx,next) => {
   const { filePath, id } = ctx.request.body;
   await uploadModel.findOneAndRemove({"filePath": filePath},(err,doc) => {
-    console.log('deleteImg ==>',err, doc)
     if(err) {
       ctx.body = { code: 500 };
     }else if(doc) {
@@ -33,7 +48,6 @@ router.post('/deleteImg',async(ctx,next) => {
   
   if(id) { //为修改记录，删除时，同时删除对应记录表中的数据
     return recordModel.findOneAndUpdate({ "_id": id },{ $set: { "filePath": "" } } ,(err,doc) => {
-      console.log('delete --->',err,doc)
       if(err) {
         ctx.body = { code: 500 };
       }else if(doc) {
@@ -66,6 +80,10 @@ router.post('/uploadImg',upload.single('file'), async(ctx, next) => {
       filePath: file.path 
     });
     await uploadEntity.save();
+
+    //prod 生产环境
+    const localFileUrl = path.resolve('/vue-my-app-koa-server','./static');
+    deleteLocalFolderImg(localFileUrl);
 
     //详情的上传图片，更新到对应的数据库
     if(ctx.req.body.id) {
@@ -116,6 +134,14 @@ router.post('/uploadImgToAliClound',upload.single('file'), async(ctx, next) => {
         filePath: url
       });
       await uploadEntity.save();
+
+      //dev 测试环境
+      //const localFileUrl = path.resolve('/MyStudy/vue-my-app-koa-server','./static');
+
+      //prod 生产环境
+      const localFileUrl = path.resolve('/vue-my-app-koa-server','./static');
+      console.log('localFileUrl ==>',localFileUrl);
+      deleteLocalFolderImg(localFileUrl);
 
       //详情的上传图片，更新到对应的数据库
       if(ctx.req.body.id) {
