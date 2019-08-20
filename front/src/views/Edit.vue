@@ -1,6 +1,6 @@
 <template>
-  <scroller lock-x scrollbar-y height="-108" ref="scroller">
-  <div >
+  <scroller>
+  <div style="margin-top: 46px">
 	  <group title="标题">
 	    <x-input  v-model="title" placeholder="请输入标题"></x-input>
 	  </group>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { Toast, Calendar, Group, XInput, XButton, Box, dateFormat, XTextarea, Scroller,  } from 'vux';
+import { Toast, Calendar, Group, XInput, XButton, Box, dateFormat, XTextarea, } from 'vux';
 import Uploader from '../components/uploader';
 import { URL_MODIFY_RECORD, URL_UPLOAD_IMG, URL_DELETE_IMG,
          URL_UPLOAD_IMG_TO_ALI_CLOUD, BASE_URL, } from '@/utils/constants';
@@ -42,7 +42,6 @@ export default {
   components: {
     Toast, Calendar, Group, XInput,
     XButton, Box, XTextarea, Uploader,
-    Scroller,
   },
   data () {
     return {
@@ -147,5 +146,4 @@ export default {
 
 
 <style scoped>
-
 </style>

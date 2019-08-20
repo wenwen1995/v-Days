@@ -77,6 +77,10 @@ z-index: 50 !important;
   color: #999;
 }
 
+.weui-mask {
+  height: 132%;
+}
+
 </style>
 
 <style scoped>

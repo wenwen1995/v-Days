@@ -4,8 +4,6 @@ import { BASE_URL } from '@/utils/constants';
 
 let requestList = [];
 
-
-
 const instance = axios.create({
   baseURL: BASE_URL, // api 的 base_url
   timeout: 10000,
@@ -13,7 +11,6 @@ const instance = axios.create({
   	'Content-Type': 'application/json;charset=UTF-8',
   }
 });
-
 
 //request interceptor
 instance.interceptors.request.use((config) => {

@@ -31,11 +31,22 @@
       </div>
     </div>
 
+    <!-- 删除确认的弹框 -->
+    <div v-transfer-dom>
+      <confirm v-model="showDialog"
+      title="提示"
+      @on-cancel="onCancel"
+      @on-confirm="onConfirm"
+      >
+        <p style="text-align:center;">确认删除此图吗？</p>
+      </confirm>
+    </div>
 
   </div>
 </template>
 
 <script >
+  import { Confirm } from 'vux'
   export default {
     props: {
       images: {
@@ -62,15 +73,6 @@
         type: String,
         default: '图片上传'
       },
-      // // 是否接管+号的click事件，如果是，点击不弹出选择文件的框
-      // handleClick: {
-      //   type: Boolean,
-      //   default: false
-      // },
-      size: {
-        type: String,
-        default: 'normal'
-      },
       capture: {
         type: String,
         default: ''
@@ -80,36 +82,108 @@
         default: 'img'
       },
     },
+    components: {
+      Confirm,
+    },
     data() {
       return {
         showPreview: false, //预览大图与否
+        showDialog: false, //显示删除图片的dialog
       }
     },
     methods: {
-      change() {
-        let formData = new window.FormData();
-        const fileInfo = this.$refs.input.files[0];
-        formData.append(this.name,fileInfo); //上传文件的信息放在对应的键值对中
-
-        const fileType = fileInfo.type;
-        const reg = /(gif|png|jpe?g)/;
-
-        if(!reg.test(fileType)) { //非图片
-          this.$vux.toast.text('上传文件类型不对！', 'middle');
-          return false;
-        }
-
-        console.log('file is ==>',fileInfo)
-        this.$emit('uploadImg',formData);
-
+      onCancel() {
+        this.showDialog = false;
       },
-      remove() {
+      onConfirm() {
          // 移除图片的时候将input file 置空，否则删除该图片之后无法再次上传该图片
         document.querySelector('.weui-uploader__input').value = '';
         this.$emit('removeImg')
       },
+      change() {
+        const fileInfo = this.$refs.input.files[0];
+
+        console.log('file is ==>',fileInfo)
+
+        const { type, size } = fileInfo;
+        const reg = /(gif|png|jpe?g)/;
+
+        if(!reg.test(type)) { //非图片
+          this.$vux.toast.text('上传文件类型不对！', 'middle');
+          return false;
+        }
+
+        //图片尺寸大于30M，不允许上传
+        if((size/(1024*1024)) > 30) {
+          this.$vux.toast.text('文件尺寸过大，请重新选择！', 'middle');
+          return false;
+        }
+
+        const self = this;
+
+        const reader = new FileReader();
+
+        //图片转成base 64 格式
+        reader.readAsDataURL(fileInfo);
+
+        //读取成功后，进行回调
+        reader.onloadend = function() {
+          let result = this.result;
+          const img = new Image();
+          img.src = result;
+          // console.log('result is ==>',result);
+
+
+          img.onload = function() {
+             // base64 转化成blob 
+            let data = self.compressImg(img); //压缩图片
+            let blob = self.dataURItoBlob(data);
+            console.log('now blob is -->',blob)
+
+            // blob 转化为 form表单
+            let formData = new window.FormData();
+            formData.append(self.name,blob); //上传文件的信息放在对应的键值对中
+
+            self.$emit('uploadImg',formData);
+          }
+        }
+
+      },
+      dataURItoBlob(dataURI) {
+        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]; // mime类型
+        const byteString = atob(dataURI.split(',')[1]); //base64 解码
+        const arrayBuffer = new ArrayBuffer(byteString.length); //创建缓冲数组
+        const intArray = new Uint8Array(arrayBuffer); //创建视图
+
+        for (let i = 0; i < byteString.length; i++) {
+            intArray[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([intArray], {type: mimeString});
+      },
+      compressImg(img) {
+         let canvas = document.createElement('canvas');
+         let ctx = canvas.getContext('2d');
+         const initSize = img.src.length;
+         let width = img.width;
+         let height = img.height;
+         canvas.width = width;
+         canvas.height = height;
+         //铺底色
+         ctx.fillStyle = '#fff';
+         ctx.fillRect(0,0,canvas.width,canvas.height);
+         ctx.drawImage(img,0,0,width,height);
+
+         //进行最小压缩
+         let pressData = canvas.toDataURL('image/jpeg',0.1);
+         console.log('压缩前==>',initSize);
+         console.log('压缩后==>',pressData.length);
+         console.log('压缩率===>'+ ~~(100 * (initSize - pressData.length) / initSize) + "%");
+         return pressData;
+      },
+      remove() {
+        this.showDialog = true;
+      },
       preview(img) {
-        console.log('img is -->',img)
         this.showPreview = true;
       },
       hidePreview() {
