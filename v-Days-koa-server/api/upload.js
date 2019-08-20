@@ -82,7 +82,7 @@ router.post('/uploadImg',upload.single('file'), async(ctx, next) => {
     await uploadEntity.save();
 
     //prod 生产环境
-    const localFileUrl = path.resolve('/vue-my-app-koa-server','./static');
+    const localFileUrl = path.resolve('/home/vue-my-app-koa-server','./static');
     deleteLocalFolderImg(localFileUrl);
 
     //详情的上传图片，更新到对应的数据库
@@ -139,7 +139,7 @@ router.post('/uploadImgToAliClound',upload.single('file'), async(ctx, next) => {
       //const localFileUrl = path.resolve('/MyStudy/vue-my-app-koa-server','./static');
 
       //prod 生产环境
-      const localFileUrl = path.resolve('/vue-my-app-koa-server','./static');
+      const localFileUrl = path.resolve('/home/vue-my-app-koa-server','./static');
       console.log('localFileUrl ==>',localFileUrl);
       deleteLocalFolderImg(localFileUrl);
 
