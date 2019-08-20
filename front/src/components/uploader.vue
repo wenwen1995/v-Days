@@ -250,7 +250,7 @@
 }
 
 .uploaderPreviewImg {
-  height: 100%;
+  height: 118%;
   display: flex;
   align-items: center;
   justify-content: center;

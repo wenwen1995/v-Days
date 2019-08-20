@@ -1,6 +1,6 @@
 <template>
   <scroller>
-  <div style="margin-top: 46px">
+  <div style="margin-top: 46px;padding-bottom: 50px">
 	  <group title="标题">
 	    <x-input  v-model="title" placeholder="请输入标题"></x-input>
 	  </group>
