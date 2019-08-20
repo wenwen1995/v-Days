@@ -17,7 +17,7 @@ let client = new OSS({
 });
 
 //删除本地文件夹
-function deleteLocalFolderImg(url,imgUrl) {
+function deleteLocalFolderImg(url) {
  let files = [];
  const isExistUrl = fs.existsSync(url);
  console.log('isExistUrl --->',isExistUrl);

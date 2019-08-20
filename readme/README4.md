@@ -178,6 +178,55 @@ router.post('/uploadImgToAliClound',upload.single('file'), async(ctx, next) => {
 
 })
 ```
+
+<font color=#DC143C  face="黑体">注意： 上述这样的写法功能是完全没有问题的，但存在个问题就是： **上传的图片会先放在本地的static文件夹下，然后再上传到阿里云 对象存储上。如果上传到云 对象存储后，不做删除本地static文件夹下对应的图片，会使得服务器上static文件夹下图片越来越多和庞大**</font>
+
+所以，参考网上的node 如何删除图片，写了个方法，在上传图片到云对象存储后，进行删除本地static文件夹下的处理
+
+具体方法如下：
+```js
+//删除本地文件夹
+function deleteLocalFolderImg(url) {
+ let files = [];
+ const isExistUrl = fs.existsSync(url);
+ console.log('isExistUrl --->',isExistUrl);
+ if(isExistUrl) {
+  files = fs.readdirSync(url);
+  console.log('files is ==>',files);
+  files.forEach((file,index) => {
+    // 得到图片路径，删除本地文件
+    const curPath = path.join(url,file);
+    console.log('curPath --->',curPath);
+    curPath && fs.unlinkSync(curPath);
+  })
+ }
+}
+```
+
+调用的话，在上述上传代码uploadImgToAliClound 中
+```js
+ //...前面一些省略内容
+    const uploadEntity = new uploadModel({
+      fileName: fileFinalName,
+      filePath: url
+    });
+    await uploadEntity.save();
+
+    //dev 测试环境
+      //const localFileUrl = path.resolve('/MyStudy/vue-my-app-koa-server','./static');
+
+    //prod 生产环境
+    const localFileUrl = path.resolve('/home/vue-my-app-koa-server','./static');
+    // console.log('localFileUrl ==>',localFileUrl);
+    deleteLocalFolderImg(localFileUrl);
+ //...后面一些省略内容
+```
+
+**注意：上述的生产环境，存放图片路径根据实际自己后台代码部署在服务器上的路径来**
+
+我的路径在服务器上是这样的：
+![static文件夹在服务器上的路径](https://wrapper-1258672812.cos.ap-chengdu.myqcloud.com/19-8-20/1.png)
+
  
  * 原来对应的前端页面也要有对应的更改，  详情见src/views/Edit.vue,
 
