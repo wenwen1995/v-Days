@@ -1,43 +1,45 @@
 <template>
-  <div >
-  	<div class="logoWrap">
-  	  <div class="logo">v-Days</div>
-  	</div>
-  	<box gap="100px 10px">
-	    <group label-width="5.5em" label-margin-right="2em" >
-        <div @click="goModifyPwd">
-	    	  <cell title="修改密码" is-link ></cell>
+  <scroller>
+    <div style="padding-bottom: 50px">
+    	<div class="logoWrap">
+    	  <div class="logo">v-Days</div>
+    	</div>
+    	<box gap="100px 10px">
+  	    <group label-width="5.5em" label-margin-right="2em" >
+          <div @click="goModifyPwd">
+  	    	  <cell title="修改密码" is-link ></cell>
+          </div>
+          <div @click="changeSkin">
+            <cell title="换肤" is-link ></cell>
+          </div>
+          <div @click="showMeDialog">
+  	    	  <cell title="关于" is-link></cell>
+          </div>
+  	    </group>
+  	  </box>
+  	  <box gap="80px 10px">
+  	  	<group label-width="5.5em" label-margin-right="2em" >
+          <div @click="logout">
+  		      <cell title="退出" is-link></cell>
+          </div>
+  		  </group>
+  		</box>
+      <x-dialog v-model="isShowDialog" >
+        <div class="dialogWrap">
+           <h3 class="dialogTitle">v-Days </h3>
+           <div class="dialogContent">
+             <p>记录简单生活,</p>
+             <p>偶尔的小确幸日子,</p>
+             <p>一起编织成,</p>
+             <p>最美的篇章...</p>
+          </div>
+         </div>
+        <div @click="isShowDialog=false">
+           <span class="vux-close"></span>
         </div>
-        <div @click="changeSkin">
-          <cell title="换肤" is-link ></cell>
-        </div>
-        <div @click="showMeDialog">
-	    	  <cell title="关于" is-link></cell>
-        </div>
-	    </group>
-	  </box>
-	  <box gap="80px 10px">
-	  	<group label-width="5.5em" label-margin-right="2em" >
-        <div @click="logout">
-		      <cell title="退出" is-link></cell>
-        </div>
-		  </group>
-		</box>
-    <x-dialog v-model="isShowDialog" >
-      <div class="dialogWrap">
-         <h3 class="dialogTitle">v-Days </h3>
-         <div class="dialogContent">
-           <p>记录简单生活,</p>
-           <p>偶尔的小确幸日子,</p>
-           <p>一起编织成,</p>
-           <p>最美的篇章...</p>
-        </div>
-       </div>
-      <div @click="isShowDialog=false">
-         <span class="vux-close"></span>
-      </div>
-    </x-dialog>
-  </div>
+      </x-dialog>
+    </div>
+  </scroller>
 </template>
 
 <script>

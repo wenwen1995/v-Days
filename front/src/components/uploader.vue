@@ -17,7 +17,7 @@
     </ul>
   
       <!-- 预览大图 -->
-      <div class="uploaderPreviewImg" v-if="showPreview" @click="hidePreview">
+      <div class="uploaderPreviewImg" :style="{ height: `${height}px`, top: '-3%',} " v-if="showPreview" @click="hidePreview">
         <ul class="weui-uploader__files">
         <li v-for="image in images" :key="image" >
           <img :src="image" class="bigImgStyle" >
@@ -46,12 +46,16 @@
 </template>
 
 <script >
-  import { Confirm } from 'vux'
+  import { Confirm, TransferDom  } from 'vux'
   export default {
     props: {
       images: {
         type: Array,
         default: () => []
+      },
+      maskHeight: {
+        type: Number,
+        default: 0
       },
       max: {
         type: Number,
@@ -85,10 +89,21 @@
     components: {
       Confirm,
     },
+    directives: {
+      TransferDom
+    },
     data() {
       return {
         showPreview: false, //预览大图与否
         showDialog: false, //显示删除图片的dialog
+        height: this.maskHeight
+      }
+    },
+    watch: {
+      height: {
+        handler(newVal,oldVal) {
+          this.height = newVal;
+        }
       }
     },
     methods: {
@@ -250,7 +265,6 @@
 }
 
 .uploaderPreviewImg {
-  height: 118%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,7 +278,7 @@
 }
 
 .bigImgStyle {
-  width: 400px;
+  width: 322px;
   height: auto;
 }
 

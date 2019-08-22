@@ -1,6 +1,6 @@
 <template>
   <scroller>
-  <div style="margin-top: 46px;padding-bottom: 50px">
+  <div style="margin-top: 60px;padding-bottom: 50px">
 	  <group title="标题">
 	    <x-input  v-model="title" placeholder="请输入标题"></x-input>
 	  </group>
@@ -11,6 +11,7 @@
       <Uploader :images="images" 
                 :max="1"
                 :readOnly="false"
+                :maskHeight="maskHeight"
                 name="file"
                 @uploadImg="uploadImg"
                 @removeImg="removeImg"
@@ -48,13 +49,16 @@ export default {
       id: '',
       title:'',
       description:'',
-      // height: '',
+      maskHeight: 0,
       //一下为日期选择
       calendarDate: '',
       readonly: false,
       images: [], //上传文件
       uploadFileName: '',
     }
+  },
+  created() {
+    this.maskHeight = document.documentElement.clientHeight;
   },
   mounted() {
   	const { query } = this.$route;
@@ -72,6 +76,7 @@ export default {
 	  	Object.assign(this, {...this.$route.query});
 	  	console.log('mounted this',this)
   	}
+
   },
   methods: {
     isDataValid() {
