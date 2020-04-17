@@ -10,9 +10,9 @@ let router = new Router();
 //使用阿里云对象存储，初始配置
 const OSS = require('ali-oss');
 let client = new OSS({
-  region: 'oss-cn-hangzhou',
-  accessKeyId: '********',
-  accessKeySecret: '********',
+  region: 'xxxxx',
+  accessKeyId: 'xxxxx',
+  accessKeySecret: 'xxxxxx',
   bucket: 'wenwen-img-bucket',
 });
 
